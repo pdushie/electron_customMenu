@@ -1,5 +1,7 @@
 // OUR MAIN ELECTRON PROCESS = think of this as the backend or server-side
-const { app, ipcMain, BrowserWindow } = require('electron');
+const { app, ipcMain, Menu, BrowserWindow } = require('electron');
+const customMenuModule = require('./menu');
+
 
 const ExifImage = require('exif').ExifImage;
 
@@ -22,6 +24,11 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow()
 })
+
+
+// attach our custom menu template as the main application menu - rmove the default menu
+Menu.setApplicationMenu(customMenuModule);
+
 
 // have a new event listener on ipcMain for fileSelected
 ipcMain.on('fileSelected', (event, fullFilePath) => {
